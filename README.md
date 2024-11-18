@@ -1,16 +1,88 @@
-# Introduction to Git and GitHub
+# AI Workflow: AI in Production
 
-## Simple Interest Calculator
+## Capstone Assignment
 
-A calculator that calculates simple interest given principal, annual rate of interest and time period in years.
+Python version: 3.11.4
+
+## Run Python server via command line:
+
+pip install -r requirements.txt
+
+python app.py
+
+## Use local JupyterLab:
+
+pip install jupyterlab
+
+jupyter lab
+
+Open http://localhost:8888/lab to load iynb file.
+
+# Project Execution Instructions
+## Run the model directly
 
 ```
-Input:
-   p, principal amount
-   t, time period in years
-   r, annual rate of interest
-Output
-   simple interest = p*t*r
+usage: model.py [-h] [-t {test, prod}] [-m {rf,et}] [-s {ss,rs}] -c COUNTRIES
+
+options:
+  -h, --help            show this help message and exit
+  -t {test, prod}, --training {test, prod}
+                        Train either a test or production model. Omitting this implies loading an already-trained model
+  -m {rf,et}, --model {rf,et}
+                        (rf) RandomForestRegressor or (et) ExtraTreesRegressor (default)
+  -s {ss,rs}, --scaler {ss,rs}
+                        (ss) StandardScaler or (rs) RobustScaler (default)
+  -c COUNTRIES, --countries COUNTRIES
+                        Comma separated list of countries to predict revenue
 ```
 
-_© 2022 XYZ, Inc._
+## Run unit tests
+### Run all tests
+```
+python3 run-tests.py
+```
+### Model Tests
+All tests: `python3 -m unittest unittests/ModelTests.py`
+
+Specific test: `python3 -m unittest unittests.ModelTest.test_02_load`
+
+### Logger Tests
+All tests: `python3 -m unittest unittests/LoggerTests.py`
+
+Specific test: `python3 -m unittest unittests.ModelTest.test_04_predict`
+
+### API Tests
+All tests: `python3 -m unittest unittests/ApiTests.py`
+
+Specific test: `python3 -m unittest unittests.ApiTest.test_04_predict_all`
+
+## Performance monitoring
+Run `python3 src/monitoring.py`.
+
+## API Documentation
+
+Make sure that you run the server with `python3 app.py` or `python3 app.py -d`.
+
+
+      Request type    | Key            | Description
+     =======================================================================
+      /train          | mode           | Training mode - test or prod
+     -----------------+----------------+------------------------------------
+                      | query          | Query for model, must be a dict containing 
+      /predict        |                | 'country','year','month','day' as keys, with their
+                      |                | values as strings.
+                      | mode           | Model to be used - test or prod
+     -----------------+----------------+------------------------------------
+      /logs           | filename       | Name of log file to retrive
+     -----------------+----------------+------------------------------------
+
+## folders
+
+/data               includs cs-train and cs-production data
+
+/models             trained data
+
+/logs               logs
+
+
+2024
